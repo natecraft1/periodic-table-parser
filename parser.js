@@ -8,24 +8,22 @@ function parseEx(str, breakAfterNext) {
 
   var a = []
   while (str[0] && str[0] != ")") {
-    
     if (str[0] == "(") str = str.slice(1)
-    
     var exp = createDataNode(str[0])
     a.push(exp)
-    
-    if (breakAfterNext || exp instanceof Letter) { 
+    if (breakAfterNext) { 
       str = str.slice(1)
       break; 
     }
-    // this means its a Multiplier
-    var bNext = str[0] != "("
-    var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
-    exp.args = subExp.args
-    str = subExp.rest
-
+    if (exp instanceof Letter) {
+      str = str.slice(1)
+    } else {
+      var bNext = shouldBreakAfterNext(str[1])
+      var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
+      exp.args = subExp.args
+      str = subExp.rest
+    }
   }
-
   if (str[0] == ")") str = str.slice(1)
   return { args: a, rest: str }
 }
@@ -58,11 +56,11 @@ function Letter(l) {
 }
 
 function Multiplier(n) {
+  if (!Number(n)) n = Number(n)
   this.args = []
   this.val = n
   this.type = "Multiplier"
 }
-
 
 // example data structure from parseEx(testCases[1])
 {  
