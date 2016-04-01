@@ -8,22 +8,24 @@ function parseEx(str, breakAfterNext) {
 
   var a = []
   while (str[0] && str[0] != ")") {
+    
     if (str[0] == "(") str = str.slice(1)
+    
     var exp = createDataNode(str[0])
     a.push(exp)
-    if (breakAfterNext) { 
+    
+    if (breakAfterNext || exp instanceof Letter) { 
       str = str.slice(1)
       break; 
     }
-    if (exp instanceof Letter) {
-      str = str.slice(1)
-    } else {
-      var bNext = shouldBreakAfterNext(str[1])
-      var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
-      exp.args = subExp.args
-      str = subExp.rest
-    }
+    
+    var bNext = shouldBreakAfterNext(str[1])
+    var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
+    exp.args = subExp.args
+    str = subExp.rest
+
   }
+  
   if (str[0] == ")") str = str.slice(1)
   return { args: a, rest: str }
 }
