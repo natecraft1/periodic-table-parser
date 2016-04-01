@@ -18,7 +18,7 @@ function parseEx(str, breakAfterNext) {
     if (exp instanceof Letter) {
       str = str.slice(1)
     } else {
-      var bNext = shouldBreakAfterNext(str[1])
+      var bNext = str[1] != "("
       var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
       exp.args = subExp.args
       str = subExp.rest
