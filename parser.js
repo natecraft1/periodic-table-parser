@@ -19,7 +19,7 @@ function parseEx(str, breakAfterNext) {
       break; 
     }
     // this means its a Multiplier
-    var bNext = shouldBreakAfterNext(str[1])
+    var bNext = str[0] != "("
     var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
     exp.args = subExp.args
     str = subExp.rest
@@ -63,6 +63,7 @@ function Multiplier(n) {
   this.val = n
   this.type = "Multiplier"
 }
+
 
 // example data structure from parseEx(testCases[1])
 {  
