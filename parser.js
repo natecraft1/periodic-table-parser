@@ -58,7 +58,6 @@ function Letter(l) {
 }
 
 function Multiplier(n) {
-  if (!Number(n)) n = Number(n)
   this.args = []
   this.val = n
   this.type = "Multiplier"
