@@ -18,14 +18,14 @@ function parseEx(str, breakAfterNext) {
       str = str.slice(1)
       break; 
     }
-    
+    // this means its a Multiplier
     var bNext = shouldBreakAfterNext(str[1])
     var subExp = parseEx(str.slice(bNext ? 1 : 2), bNext)
     exp.args = subExp.args
     str = subExp.rest
 
   }
-  
+
   if (str[0] == ")") str = str.slice(1)
   return { args: a, rest: str }
 }
