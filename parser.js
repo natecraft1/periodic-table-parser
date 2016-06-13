@@ -1,3 +1,10 @@
+// Flatten these periodic table elements so that 'h2(o3a) becomes'
+// {
+    // h: 1,
+    // o: 2,
+    // a: 6
+// }
+
 var testCases = ["h2(oa)", "s2j3(k2(ar)m)i", "o2h"]
 
 testCases.forEach(function(testCase) {
